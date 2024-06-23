@@ -1,4 +1,3 @@
-import { NEXT_PUBLIC_URL } from '@/config'
 import { Html, Head, Main, NextScript } from 'next/document'
 
 export default function Document() {
@@ -10,8 +9,8 @@ export default function Document() {
         <meta property="og:description" content="Farcaster: Tamagotchi game" />
         <meta property="fc:frame:image" content="http://localhost:3000/images/welcome/screen.png" />
         <meta property="og:image" content="http://localhost:3000/images/welcome/screen.png" />
-        <meta property="fc:frame:post_url" content={`http://localhost:3000/api/welcome-check`} />
-        <meta property="fc:frame:button:1" content="Get started" />
+        <meta property="fc:frame:post_url" content={`http://localhost:3000/api/check`} />
+        <meta property="fc:frame:button:1" content="Start" />
       </Head>
       <body>
         <Main />
