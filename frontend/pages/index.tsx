@@ -19,13 +19,13 @@ const config = {
 export default function Home() {
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>Farcaster AuthKit + NextAuth Demo</title>
-      </Head>
+      </Head> */}
       <main style={{ fontFamily: "Inter, sans-serif" }}>
-        <AuthKitProvider config={config}>
+        {/* <AuthKitProvider config={config}>
           <Content />
-        </AuthKitProvider>
+        </AuthKitProvider> */}
       </main>
     </>
   );
