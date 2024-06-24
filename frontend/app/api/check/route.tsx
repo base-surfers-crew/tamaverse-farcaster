@@ -6,7 +6,6 @@ import {
 } from "@coinbase/onchainkit/core";
 import { NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
-import sharp from 'sharp';
 import satori from "satori";
 import { join } from 'path';
 import * as fs from "fs";
@@ -22,29 +21,62 @@ async function getResponse(req: NextRequest) {
     allowFramegear,
   });
 
+  const absoluteImageUrl = `${BASE_URL}/images/pets/test.png`;
+
   const svg = await satori(
     <div style={{
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'center',
         display: 'flex',
         width: '100%',
         height: '100%',
-        backgroundColor: 'f4f4f4',
-        padding: 50,
+        backgroundColor: '#000',
+        padding: 12,
         lineHeight: 1.2,
         fontSize: 24,
+        color: '#fff',
     }}>
-        <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            padding: 20,
-        }}>
-            <h2 style={{textAlign: 'center', color: 'lightgray'}}>test</h2>
-        </div>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}>
+        <span>100%</span>
+        <div 
+        style={{
+          width: '100%',
+          backgroundColor: '#06D75A',
+          height: '100%',
+        }}></div>
+      </div>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}>
+        <div>Droid_Chepurin</div>
+        <img style={{
+          display: 'block',
+          width: '100%',
+          height: '100%',
+          objectFit: 'contain',
+        }} src={absoluteImageUrl} />
+      </div>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}>
+        <span>Lvl 1</span>
+        <div 
+        style={{
+          width: '100%',
+          backgroundColor: '#06D75A',
+          height: '100%',
+        }}></div>
+      </div>
+
     </div>
     ,
     {
-        width: 600, height: 400, 
+        width: 675, height: 350, 
         fonts: [{
             data: fontData,
             name: 'Roboto',
@@ -53,10 +85,8 @@ async function getResponse(req: NextRequest) {
         }]
     })
 
-  const pngBuffer = await sharp(Buffer.from(svg)).toFormat("png").toBuffer();
-
-  const base64Image = pngBuffer.toString('base64');
-  const dataUrl = `data:image/png;base64,${base64Image}`;
+  const base64Svg = Buffer.from(svg).toString('base64');
+  const dataUrl = `data:image/svg+xml;base64,${base64Svg}`;
 
   return new NextResponse(getFrameHtmlResponse({
     buttons: [{ label: "Back" }, { label: "Start" }],
