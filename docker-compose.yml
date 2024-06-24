@@ -1,4 +1,11 @@
 services:
+  frontend:
+    build: 
+      context: ./frontend
+    restart: unless-stopped
+    ports:
+      - 4000:3000
+      
   backend:
     build: 
       context: ./backend
@@ -9,13 +16,6 @@ services:
       - pg_db
     networks:
       - pg_net
-
-  frontend:
-    build: 
-      context: ./frontend
-    restart: unless-stopped
-    ports:
-      - 4000:3000
 
   pg_db:
     image: postgres:16

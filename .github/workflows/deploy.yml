@@ -1,0 +1,65 @@
+name: Build and deploy tamaverse app
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: self-hosted
+    if: github.ref == 'refs/heads/main'
+    env:
+      APP_DOMAIN: ${{ secrets.APP_DOMAIN }}
+      ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+      REFRESH_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      TAMAVERSE_CONTRACT_ADDRESS: ${{ secrets.TAMAVERSE_CONTRACT_ADDRESS }}
+      ETH_RPC_NODE: ${{ secrets.ETH_RPC_NODE }}
+      FARCAST_RPC_NODE: ${{ secrets.ETH_RPC_NODE }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Prepare backend envs
+        run: |
+          cp ./backend/.env.example ./backend/.env.production
+          sed -i \
+            -e s/^APP_DOMAIN=.*/APP_DOMAIN=$APP_DOMAIN/ \
+            -e s/^ACCESS_TOKEN_SECRET=.*/ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET/ \
+            -e s/^REFRESH_TOKEN_SECRET=.*/REFRESH_TOKEN_SECRET=$REFRESH_TOKEN_SECRET/ \
+            -e s/^DB_NAME=.*/DB_NAME=$DB_NAME/ \
+            -e s/^DB_USERNAME=.*/DB_USERNAME=$DB_USERNAME/ \
+            -e s/^DB_PASSWORD=.*/DB_PASSWORD=$DB_PASSWORD/ \
+            -e s/^TAMAVERSE_CONTRACT_ADDRESS=.*/TAMAVERSE_CONTRACT_ADDRESS=$TAMAVERSE_CONTRACT_ADDRESS/ \
+            -e s/^ETH_RPC_NODE=.*/ETH_RPC_NODE=$ETH_RPC_NODE/ \
+            -e s/^FARCAST_RPC_NODE=.*/FARCAST_RPC_NODE=$FARCAST_RPC_NODE/ \
+            ./backend/.env.production
+
+
+      - name: Prepare compose envs
+        run: |
+          rm -f .env
+          touch .env
+          echo COMPOSE_PROJECT_NAME=tamaverse >> .env
+          echo DB_NAME=$DB_NAME >> .env
+          echo DB_USERNAME=$DB_USERNAME >> .env
+          echo DB_PASSWORD=$DB_PASSWORD >> .env
+
+      - name: Start docker compose
+        run: |
+          docker compose up -d --build
+
+  cleanup:
+    name: Cleanup docker build
+    runs-on: self-hosted
+    needs: [deploy]
+    if: always()
+    steps:
+      - name: Prune old images
+        run: |
+          docker system prune -a -f
