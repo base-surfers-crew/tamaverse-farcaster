@@ -25,7 +25,7 @@ export async function Migrate(arg?: MigratorCommands): Promise<void> {
 
   const orm = await MikroORM.init({
     migrations: {
-      path: path.join(__dirname, './Postgresql'),
+      path: path.join(__dirname, '../Postgresql'),
       pathTs: './src/Persistence/Migrations/Postgresql',
     },
     discovery: { disableDynamicFileAccess: true },

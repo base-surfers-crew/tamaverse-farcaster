@@ -48,7 +48,7 @@ build
 yarn.lock
 
 # Environment variables
-.development.env
+.env.production
 .env.development
 .env.local
 .env

@@ -3,7 +3,7 @@
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
-    "types": ["reflect-metadata", "jest" , "node"],
+    "types": ["reflect-metadata", "node"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
