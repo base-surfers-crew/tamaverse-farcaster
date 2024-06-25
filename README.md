@@ -4,6 +4,8 @@
 
 Welcome to Tamaverse, a Web3 application where users nurture and level up NFT pets through activities on the Farcaster platform. By engaging in actions like casts and recasts, users accumulate energy, which is spent on developing their pets. Our project integrates blockchain technology to create an immersive and interactive digital pet experience, combining gaming with the potential for future token airdrops and unique NFT rewards.
 
+![2024-06-25 16 25 42](https://github.com/base-surfers-crew/tamaverse-farcaster/assets/24797699/1ec13308-3184-441f-9d9b-0a1117326e72)
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)
