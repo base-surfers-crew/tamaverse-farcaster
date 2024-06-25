@@ -16,7 +16,7 @@ import { UnauthorizedException } from "../../Infrastructure/Exceptions/Unauthori
 @injectable()
 export class AuthService implements IAuthService {
   private readonly _appDomain = process.env.APP_DOMAIN;
-  private readonly _rpcNode = process.env.ETH_RPC_NODE;
+  private readonly _rpcNode = process.env.BASE_RPC_NODE;
 
   private readonly _dbContext: IDbContext;
   private readonly _jwtService: IJwtService;

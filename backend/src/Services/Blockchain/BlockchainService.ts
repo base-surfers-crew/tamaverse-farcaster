@@ -16,7 +16,7 @@ export class BlockchainService implements IBlockchainService {
     const contract = new Contract(
       ownerOfAbi,
       contractAddress,
-      { provider: process.env.ETH_RPC_NODE }
+      { provider: process.env.BASE_RPC_NODE }
     )
 
     const owner = await contract.methods.ownerOf(tokenId).call<string>();

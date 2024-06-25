@@ -19,8 +19,8 @@ jobs:
       DB_USERNAME: ${{ secrets.DB_USERNAME }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       TAMAVERSE_CONTRACT_ADDRESS: ${{ secrets.TAMAVERSE_CONTRACT_ADDRESS }}
-      ETH_RPC_NODE: ${{ secrets.ETH_RPC_NODE }}
-      FARCAST_RPC_NODE: ${{ secrets.ETH_RPC_NODE }}
+      BASE_RPC_NODE: ${{ secrets.BASE_RPC_NODE }}
+      FARCAST_RPC_NODE: ${{ secrets.BASE_RPC_NODE }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -36,7 +36,7 @@ jobs:
             -e s/^DB_USERNAME=.*/DB_USERNAME=$DB_USERNAME/ \
             -e s/^DB_PASSWORD=.*/DB_PASSWORD=$DB_PASSWORD/ \
             -e s/^TAMAVERSE_CONTRACT_ADDRESS=.*/TAMAVERSE_CONTRACT_ADDRESS=$TAMAVERSE_CONTRACT_ADDRESS/ \
-            -e s/^ETH_RPC_NODE=.*/ETH_RPC_NODE=$ETH_RPC_NODE/ \
+            -e s/^BASE_RPC_NODE=.*/BASE_RPC_NODE=$BASE_RPC_NODE/ \
             -e s/^FARCAST_RPC_NODE=.*/FARCAST_RPC_NODE=$FARCAST_RPC_NODE/ \
             ./backend/.env.production
 
