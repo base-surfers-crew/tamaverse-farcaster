@@ -32,6 +32,7 @@ jobs:
             -e s/^APP_DOMAIN=.*/APP_DOMAIN=$APP_DOMAIN/ \
             -e s/^ACCESS_TOKEN_SECRET=.*/ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET/ \
             -e s/^REFRESH_TOKEN_SECRET=.*/REFRESH_TOKEN_SECRET=$REFRESH_TOKEN_SECRET/ \
+            -e s/^DB_HOST=.*/DB_HOST=pg_db/ \
             -e s/^DB_NAME=.*/DB_NAME=$DB_NAME/ \
             -e s/^DB_USERNAME=.*/DB_USERNAME=$DB_USERNAME/ \
             -e s/^DB_PASSWORD=.*/DB_PASSWORD=$DB_PASSWORD/ \
