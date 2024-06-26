@@ -1,7 +1,6 @@
-import { HubEventType, HubRpcClient, getSSLHubRpcClient } from "@farcaster/hub-nodejs";
+import { HubEventType, HubRpcClient, getInsecureHubRpcClient, getSSLHubRpcClient } from "@farcaster/hub-nodejs";
 import { ILoggerService, LoggerServiceSymbol } from "../Logging/ILoggerService";
 import { inject, injectable } from "inversify";
-import { DbContextSymbol, IDbContext } from "../../Persistence/IDbContext";
 import { FarcastMessageTypes } from "../../Infrastructure/Enums/Farcast/FarcastMessageTypes";
 import { EnergyServiceSymbol, IEnergyService } from "../Energy/IEnergyService";
 import { FarcastEnergyBonuses } from "../../Infrastructure/Enums/Farcast/FarcastEnergyBonuses";
@@ -21,9 +20,12 @@ export class FarcasterRpcListener implements IFarcasterRpcListener {
     @inject(LoggerServiceSymbol) private loggerService: ILoggerService,
   ) {
     this._rpcEndpoint = process.env.FARCAST_RPC_NODE;
-    this._client = getSSLHubRpcClient(this._rpcEndpoint, {
-      "grpc.max_receive_message_length": 5000000000
-    });
+    this._client = getInsecureHubRpcClient(
+      this._rpcEndpoint,
+      {
+        "grpc.max_receive_message_length": 5000000000
+      }
+    );
     
     this._energyService = energyService;
     this._logger = loggerService;
@@ -69,7 +71,6 @@ export class FarcasterRpcListener implements IFarcasterRpcListener {
 
   private async ProcessEvent(event: any): Promise<void> {
     const fid = event.mergeMessageBody.message.data.fid;
-    this._logger.Info(`START PROCESSING NEW EVENT FROM: ${fid}`);
 
     switch (event.mergeMessageBody.message.data.type) {
       case FarcastMessageTypes.CastAdd:
@@ -91,7 +92,5 @@ export class FarcasterRpcListener implements IFarcasterRpcListener {
 
         break;
     }
-
-    this._logger.Info(`EVENT FROM: ${fid} WAS PROCESSED`);
   }
 }

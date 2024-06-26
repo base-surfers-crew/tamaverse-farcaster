@@ -4,6 +4,7 @@ import { ILoggerService, LoggerServiceSymbol } from './Services/Logging/ILoggerS
 import { Bootstrap } from './Bootstrap';
 import { Migrate, MigratorCommands } from './Persistence/Migrations/Executables/MigratorPostgresql';
 import { FacrasterRpcListenerSymbol, IFarcasterRpcListener } from './Services/Farcaster/IFarcasterRpcListener';
+import { CronService } from './Services/Scheduler/CronService';
 
 async function Startup() {
   const executionTimeStart = performance.now();
@@ -21,19 +22,21 @@ async function Startup() {
 
   // Farcaster
   const farcastListener = container.get<IFarcasterRpcListener>(FacrasterRpcListenerSymbol);
+  const cronService = new CronService(container);
   const server = instance.listen(port, host, () => {
     const executionTimeEnd = performance.now();
     const executionTime = (executionTimeEnd - executionTimeStart).toFixed(2);
 
     logger.Info(`Server started on port ${port} | ${executionTime}ms`);
     
-    // farcastListener.Listen();
+    farcastListener.Listen();
+    cronService.StartScheduling();
   });
 
   process.on("exit", () => {
     logger.Info("Shutting down the application");
     server.close();
-    // farcastListener.Close();
+    farcastListener.Close();
     logger.Info("The application has successfully shutted down");
   })
 }
