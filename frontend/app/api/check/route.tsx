@@ -31,7 +31,10 @@ async function getResponse(req: NextRequest) {
         width: '100%',
         height: '100%',
         backgroundColor: '#000',
-        padding: 30,
+        paddingTop: 24,
+        paddingBottom: 32,
+        paddingLeft: 12,
+        paddingRight: 12,
         lineHeight: 1.2,
         fontSize: 24,
         color: '#fff',
@@ -68,11 +71,15 @@ async function getResponse(req: NextRequest) {
       <div style={{
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'center',
+        width: '80%',
       }}>
-        <div>Droid_Chepurin</div>
+        <div style={{
+            marginBottom: 8
+        }}>Droid_Chepurin</div>
         <img style={{
           display: 'block',
-          width: '100%',
+          width: '50%',
           height: '100%',
           objectFit: 'contain',
         }} src={absoluteImageUrl} />

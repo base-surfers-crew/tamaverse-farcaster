@@ -10,7 +10,7 @@ export default function Document() {
         <meta property="fc:frame:image" content="http://localhost:3000/images/welcome/screen.png" />
         <meta property="og:image" content="http://localhost:3000/images/welcome/screen.png" />
         <meta property="fc:frame:post_url" content={`http://localhost:3000/api/check`} />
-        <meta property="fc:frame:button:1" content="Start" />
+        <meta property="fc:frame:button:1" content="Let’s start! 🚀" />
       </Head>
       <body>
         <Main />
