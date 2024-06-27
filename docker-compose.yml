@@ -46,7 +46,7 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.constraints=Label(`custom.label`,`${COMPOSE_PROJECT_NAME}`)"
       - "--providers.docker.exposedbydefault=false"
-      - "--providers.docker.network=${COMPOSE_PROJECT_NAME}"
+      - "--providers.docker.network=${COMPOSE_PROJECT_NAME}_traefik"
       - "--entrypoints.web.address=:80"
     labels:
       - "io.portainer.accesscontrol.teams=devs,managers"
