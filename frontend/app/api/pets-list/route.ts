@@ -1,5 +1,5 @@
 
-import { petsListFrameData, whyConnectWalletFrameData } from '@/pages/lib/constant';
+import { petsListFrameData, whyConnectWalletFrameData } from '@/lib/constant';
 import { FrameRequest, getFrameHtmlResponse, getFrameMessage } from '@coinbase/onchainkit/core';
 import { NextRequest, NextResponse } from 'next/server';
 

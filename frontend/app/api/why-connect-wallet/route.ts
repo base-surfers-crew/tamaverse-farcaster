@@ -1,4 +1,4 @@
-import { whyConnectWalletFrameData, welcomeFrameData } from '@/pages/lib/constant';
+import { whyConnectWalletFrameData, welcomeFrameData } from '@/lib/constant';
 import { FrameRequest, getFrameHtmlResponse, getFrameMessage } from '@coinbase/onchainkit/core';
 import { NextRequest, NextResponse } from 'next/server';
 

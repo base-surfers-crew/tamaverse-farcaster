@@ -1,4 +1,4 @@
-import { tamagotchiFrameData } from '@/pages/lib/constant';
+import { tamagotchiFrameData } from '@/lib/constant';
 import { FrameRequest, getFrameHtmlResponse, getFrameMessage } from '@coinbase/onchainkit/core';
 import { NextRequest, NextResponse } from 'next/server';
 
