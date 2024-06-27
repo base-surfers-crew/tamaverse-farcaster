@@ -39,7 +39,6 @@ services:
       - pg_net
 
   traefik:
-    <<: *logging
     image: traefik:2.7
     command:
       - "--log.level=INFO"
