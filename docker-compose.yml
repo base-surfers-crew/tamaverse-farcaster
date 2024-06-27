@@ -3,18 +3,27 @@ services:
     build: 
       context: ./frontend
     restart: unless-stopped
-    ports:
-      - 4000:3000
+    labels:
+      - "custom.label=${COMPOSE_PROJECT_NAME}"
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.backend.entrypoints=web"
+    networks:
+      - traefik
       
   backend:
     build: 
       context: ./backend
     restart: unless-stopped
-    ports:
-      - 3000:3000
+    labels:
+      - "custom.label=${COMPOSE_PROJECT_NAME}"
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
+      - "traefik.http.routers.backend.entrypoints=web"
     depends_on:
       - pg_db
     networks:
+      - traefik
       - pg_net
 
   pg_db:
@@ -29,9 +38,31 @@ services:
     networks:
       - pg_net
 
+  traefik:
+    <<: *logging
+    image: traefik:2.7
+    command:
+      - "--log.level=INFO"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.constraints=Label(`custom.label`,`${COMPOSE_PROJECT_NAME}`)"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=${COMPOSE_PROJECT_NAME}"
+      - "--entrypoints.web.address=:80"
+    labels:
+      - "io.portainer.accesscontrol.teams=devs,managers"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - traefik
+
 volumes:
   pgdata:
 
 networks:
   pg_net:
+  traefik:
 
