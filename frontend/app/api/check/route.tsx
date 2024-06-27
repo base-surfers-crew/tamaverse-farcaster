@@ -31,7 +31,7 @@ async function getResponse(req: NextRequest) {
         width: '100%',
         height: '100%',
         backgroundColor: '#000',
-        padding: 12,
+        padding: 30,
         lineHeight: 1.2,
         fontSize: 24,
         color: '#fff',
@@ -39,14 +39,31 @@ async function getResponse(req: NextRequest) {
       <div style={{
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
+        width: 60,
       }}>
-        <span>100%</span>
+        <div style={{
+          marginBottom: 8
+        }}>75%</div>
         <div 
         style={{
+          display: 'flex',
+          alignItems: 'flex-end',
           width: '100%',
-          backgroundColor: '#06D75A',
           height: '100%',
-        }}></div>
+          backgroundColor: '#424242',
+          borderRadius: 6,
+          border: '2px solid #333333',
+          overflow: 'hidden',
+        }}>
+          <div style={{
+            width: '100%',
+            height: '75%',
+            backgroundColor: '#06D75A',
+          }}>
+          </div>
+        </div>
       </div>
       <div style={{
         display: 'flex',
@@ -63,20 +80,36 @@ async function getResponse(req: NextRequest) {
       <div style={{
         display: 'flex',
         flexDirection: 'column',
+        textAlign: 'center',
+        alignItems: 'center',
+        width: 60,
       }}>
-        <span>Lvl 1</span>
+        <div style={{
+          marginBottom: 8
+        }}>Lvl 1</div>
         <div 
         style={{
+          display: 'flex',
+          alignItems: 'flex-end',
           width: '100%',
-          backgroundColor: '#06D75A',
           height: '100%',
-        }}></div>
+          backgroundColor: '#424242',
+          borderRadius: 6,
+          border: '2px solid #333333',
+          overflow: 'hidden',
+        }}>
+           <div style={{
+            width: '100%',
+            height: '15%',
+            backgroundColor: '#25AAE3',
+          }}></div>
+        </div>
       </div>
 
     </div>
     ,
     {
-        width: 675, height: 350, 
+        width: 668, height: 350, 
         fonts: [{
             data: fontData,
             name: 'Roboto',
