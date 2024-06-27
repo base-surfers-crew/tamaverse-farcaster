@@ -41,7 +41,6 @@ export const selectDroidFrameData: FrameMetadataType = {
   postUrl: `${BASE_URL}/api/create-pet`,
   image: {
     src: `${BASE_URL}/images/pets/select-droid.gif`,
-    aspectRatio: "1:1",
   },
 };
 
@@ -50,18 +49,5 @@ export const createPetFrameData: FrameMetadataType = {
   postUrl: `${BASE_URL}/api/tamagotchi`,
   image: {
     src: `${BASE_URL}/images/pets/new-droid.png`,
-  },
-};
-
-export const tamagotchiFrameData: FrameMetadataType = {
-  buttons: [
-    { label: "Feed 🥣" },
-    { label: "Train 💪" },
-    { label: "Educate 🧠" },
-    { label: "Rules" },
-  ],
-  postUrl: `${BASE_URL}/api/tamagotchi`,
-  image: {
-    src: `${BASE_URL}/images/pets/tamagotchi.png`,
   },
 };
