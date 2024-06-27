@@ -1,4 +1,4 @@
-import { selectDroidFrameData, walletConnectedFrameData } from '@/pages/lib/constant';
+import { selectDroidFrameData, walletConnectedFrameData } from '@/lib/constant';
 import { FrameRequest, getFrameHtmlResponse, getFrameMessage } from '@coinbase/onchainkit/core';
 import { NextRequest, NextResponse } from 'next/server';
 

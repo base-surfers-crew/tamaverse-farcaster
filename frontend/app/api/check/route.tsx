@@ -1,4 +1,4 @@
-import { BASE_URL, rulesFrameData } from "@/pages/lib/constant";
+import { BASE_URL, rulesFrameData } from "@/lib/constant";
 import {
   FrameRequest,
   getFrameHtmlResponse,
