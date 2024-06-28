@@ -28,6 +28,7 @@
     "inversify": "^6.0.1",
     "inversify-express-utils": "^6.4.3",
     "jsonwebtoken": "^9.0.0",
+    "moment": "^2.30.1",
     "node-cron": "^3.0.3",
     "reflect-metadata": "^0.1.13",
     "ts-loader": "^9.4.4",

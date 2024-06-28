@@ -6,6 +6,9 @@ import { NotFoundException } from "../../Infrastructure/Exceptions/NotFoundExcep
 import { BadRequestException } from "../../Infrastructure/Exceptions/BadRequestException";
 import { Pet } from "../../Persistence/Entities/Pet";
 import { ExperienceUtil } from "../Utils/ExperienceUtil";
+import moment from "moment";
+import * as web3 from "web3";
+import { LevelUpResponse } from "../../Infrastructure/DTOs/Pets/Responses/LevelUpResponse";
 
 @injectable()
 export class PetsService implements IPetsService {
@@ -59,7 +62,7 @@ export class PetsService implements IPetsService {
     await this._dbContext.Users.flush();
   }
 
-  public async LevelUp(userId: number): Promise<void> {
+  public async LevelUp(userId: number): Promise<LevelUpResponse> {
     const user = await this._dbContext.Users.findOne({ Id: userId }, { populate: [ "Pet" ]});
     if (user == null) {
       throw new NotFoundException(`User was not found`);
@@ -78,6 +81,18 @@ export class PetsService implements IPetsService {
     user.Experience -= xpRequired;
     user.Level += 1;
 
+    const validTill = moment().add(5, "minutes").unix();
+    const message = user.WalletAddress.replace("0x", "") + user.Level + validTill;
+    const privateKey = `0x${process.env.SIGN_ACCOUNT_PRIVATE_KEY}`;
+    const signResult = web3.eth.accounts.sign(message, privateKey);
+
     await this._dbContext.Users.flush();
+
+    return {
+      Level: user.Level,
+      Address: user.WalletAddress,
+      ValidTill: validTill,
+      Sinature: signResult.signature
+    }
   }
 }

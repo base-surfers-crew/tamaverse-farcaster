@@ -8,6 +8,7 @@ import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 import { ValidationException } from "../Infrastructure/Exceptions/ValidationException";
 import { AddExperienceRequest } from "../Infrastructure/DTOs/Pets/Requests/AddExperienceRequest";
+import { LevelUpResponse } from "../Infrastructure/DTOs/Pets/Responses/LevelUpResponse";
 
 @controller(`${Prefix}/pets`)
 export class PetsController extends BaseController {
@@ -51,9 +52,10 @@ export class PetsController extends BaseController {
   }
 
   @httpPut("/level")
-  public async AddLevel(): Promise<void> {
+  public async AddLevel(): Promise<LevelUpResponse> {
     await this.AuthorizeOrFail();
     const userId = await this.GetUserId();
-    await this._petsService.LevelUp(userId);
+    
+    return await this._petsService.LevelUp(userId);
   }
 }
