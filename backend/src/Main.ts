@@ -29,14 +29,14 @@ async function Startup() {
 
     logger.Info(`Server started on port ${port} | ${executionTime}ms`);
     
-    // farcastListener.Listen();
+    farcastListener.Listen();
     cronService.StartScheduling();
   });
 
   process.on("exit", () => {
     logger.Info("Shutting down the application");
     server.close();
-    // farcastListener.Close();
+    farcastListener.Close();
     logger.Info("The application has successfully shutted down");
   })
 }
