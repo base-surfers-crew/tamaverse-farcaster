@@ -29,7 +29,7 @@ export const selectDroidFrameData: FrameMetadataType = {
       target: `${BASE_URL}/api/get-tx-data`,
       postUrl: `${BASE_URL}/api/tamagotchi`
      }],
-  postUrl: `${BASE_URL}/api/tamagotchi`,
+  postUrl: `${BASE_URL}/api/pets-list`,
   image: {
     src: `${BASE_URL}/images/gifs/hello.gif`,
   },

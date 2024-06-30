@@ -15,45 +15,45 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   try {
     if(message.button === 1) return new NextResponse(getFrameHtmlResponse(petsListFrameData))
 
-    const response = await fetch(`${BASE_URL}/backend/pets/mint`, {
+    const mintResponse = await fetch(`${BASE_URL}/backend/pets/mint`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(frameRequest.trustedData)
     })
 
-    console.log(response)
+    console.log(mintResponse)
 
-    const txPayload = {
-      chainId: "eip155:84532",
-      method: "eth_sendTransaction",
-      params: {
-        abi: [
-          {
-              "constant": false,
-              "inputs": [
-                {
-                  "name": "_to",
-                  "type": "address"
-                },
-                {
-                  "name": "_value",
-                  "type": "uint256"
-                }
-              ],
-              "name": "mint",
-              "outputs": [],
-              "payable": false,
-              "stateMutability": "nonpayable",
-              "type": "function"
-            }
-        ],
-        to: "0x00000000fcCe7f938e7aE6D3c335bD6a1a7c593D",
-        data: "0x783a112b0000000000000000000000000000000000000000000000000000000000000e250000000000000000000000000000000000000000000000000000000000000001",
-        value: "984316556204476",
-      },
-    };
+    // const txPayload = {
+    //   chainId: "eip155:84532",
+    //   method: "eth_sendTransaction",
+    //   params: {
+    //     abi: [
+    //       {
+    //           "constant": false,
+    //           "inputs": [
+    //             {
+    //               "name": "_to",
+    //               "type": "address"
+    //             },
+    //             {
+    //               "name": "_value",
+    //               "type": "uint256"
+    //             }
+    //           ],
+    //           "name": "mint",
+    //           "outputs": [],
+    //           "payable": false,
+    //           "stateMutability": "nonpayable",
+    //           "type": "function"
+    //         }
+    //     ],
+    //     to: "0x00000000fcCe7f938e7aE6D3c335bD6a1a7c593D",
+    //     data: "0x783a112b0000000000000000000000000000000000000000000000000000000000000e250000000000000000000000000000000000000000000000000000000000000001",
+    //     value: "984316556204476",
+    //   },
+    // };
   
-    return new NextResponse(JSON.stringify(txPayload), {status: 200 });
+    return new NextResponse(JSON.stringify(mintResponse), { status: 200 });
   } catch {
     const errorMeta = await errorHandler('Error on mint NFT')
     return new NextResponse(getFrameHtmlResponse(errorMeta));
