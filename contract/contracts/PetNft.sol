@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-
+import './libs/SignerVerifiation.sol';
 contract PetNFT is ERC721, Ownable {
     using Counters for Counters.Counter;
     using SafeMath for uint256;
@@ -25,6 +25,7 @@ contract PetNFT is ERC721, Ownable {
     }
 
     mapping(uint256 => PetInfo) public petInfos;
+     address private constant signer = 0x1b8529889149F882f00a65597467026669f5b29C;
 
     uint256 public constant MAX_SUPPLY = 50000;
     uint256 public constant MAX_COMMON = 30000;
@@ -42,28 +43,34 @@ contract PetNFT is ERC721, Ownable {
 
     constructor() ERC721("PetNFT", "PNFT") {}
 
-    function mint() public payable {
+    function mint(uint random) public payable {
         require(_tokenIdCounter.current() < MAX_SUPPLY, "Max supply reached");
         require(msg.value >= getMintPriceInETH(), "Insufficient ETH for minting");
 
         uint256 tokenId = _tokenIdCounter.current();
         _safeMint(msg.sender, tokenId);
 
-        Rarity rarity = _randomRarity();
+        Rarity rarity = _randomRarity(random);
         petInfos[tokenId] = PetInfo(1, rarity);
 
         _tokenIdCounter.increment();
     }
 
-    function levelUp(uint256 tokenId) public {
+    function levelUp(uint256 tokenId, uint256 validTill, bytes calldata signature) public {
+          string memory message = string(abi.encodePacked(_addressToString(msg.sender), Strings.toString(petInfos[tokenId].level + 1), Strings.toString(validTill)));
+
+        require(
+			SignerVerification.isMessageVerified(signer, signature, message),
+			'Signature is wrong'
+		);
         require(_exists(tokenId), "Token does not exist");
         require(ownerOf(tokenId) == msg.sender, "You do not own this token");
 
         petInfos[tokenId].level += 1;
     }
 
-    function _randomRarity() private returns (Rarity) {
-        uint256 rand = _random() % 100;
+    function _randomRarity(uint random) private returns (Rarity) {
+        uint256 rand = random;
         if (rand < 60 && commonCount < MAX_COMMON) {
             commonCount += 1;
             return Rarity.Common;
@@ -114,4 +121,26 @@ contract PetNFT is ERC721, Ownable {
         require(balance > 0, "No balance to withdraw");
         payable(owner()).transfer(balance);
     }
+   function _addressToString(address _addr) internal pure returns (string memory) {
+    bytes memory addressBytes = abi.encodePacked(_addr);
+
+    bytes memory stringBytes = new bytes(40); 
+
+    for (uint256 i = 0; i < 20; ) {
+        uint8 leftValue = uint8(addressBytes[i]) / 16;
+        uint8 rightValue = uint8(addressBytes[i]) - 16 * leftValue;
+
+        bytes1 leftChar = leftValue < 10 ? bytes1(leftValue + 48) : bytes1(leftValue + 87);
+        bytes1 rightChar = rightValue < 10 ? bytes1(rightValue + 48) : bytes1(rightValue + 87);
+
+        stringBytes[2 * i] = leftChar;
+        stringBytes[2 * i + 1] = rightChar;
+
+        unchecked {
+            i++;
+        }
+    }
+
+    return string(stringBytes);
+}
 }
