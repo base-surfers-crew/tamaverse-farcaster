@@ -8,17 +8,14 @@ import {
 import { NextRequest, NextResponse } from "next/server";
 
 async function getResponse(req: NextRequest) {
-  const allowFramegear = process.env.NODE_ENV !== "production";
   const frameRequest: FrameRequest = await req.json();
 
-  const {isValid, message} = await getFrameMessage(frameRequest, {
-    allowFramegear,
-  });
+  // const {isValid, message} = await getFrameMessage(frameRequest);
 
-  if(!isValid){
-    const errorMeta = await errorHandler()
-    return new NextResponse(getFrameHtmlResponse(errorMeta));
-  }
+  // if(!isValid){
+  //   const errorMeta = await errorHandler()
+  //   return new NextResponse(getFrameHtmlResponse(errorMeta));
+  // }
 
   return new NextResponse(getFrameHtmlResponse(rulesFrameData));
 }

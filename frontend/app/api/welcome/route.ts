@@ -10,9 +10,9 @@ async function getResponse(req: NextRequest) {
   const allowFramegear = process.env.NODE_ENV !== "production";
   const frameRequest: FrameRequest = await req.json();
 
-  const {isValid, message} = await getFrameMessage(frameRequest, {
-    allowFramegear,
-  });
+  // const {isValid, message} = await getFrameMessage(frameRequest, {
+  //   allowFramegear,
+  // });
 
   return new NextResponse(getFrameHtmlResponse(welcomeFrameData));
 }

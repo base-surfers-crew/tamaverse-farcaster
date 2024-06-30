@@ -38,7 +38,7 @@ export const petsListFrameData: FrameMetadataType = {
 
 export const selectDroidFrameData: FrameMetadataType = {
   buttons: [{ label: "Back" }, { label: "Mint! 💠" }],
-  postUrl: `${BASE_URL}/api/create-pet`,
+  postUrl: `${BASE_URL}/api/tamagotchi`,
   image: {
     src: `${BASE_URL}/images/pets/select-droid.gif`,
   },

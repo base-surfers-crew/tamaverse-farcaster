@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 import satori from "satori";
 import { join } from 'path';
 import * as fs from "fs";
+import sharp from 'sharp';
 
 const fontPath = join(process.cwd(), 'Roboto-Regular.ttf')
 const fontData = fs.readFileSync(fontPath)
@@ -16,7 +17,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const frameRequest: FrameRequest = await req.json();
   // const { isValid, message } = await getFrameMessage(frameRequest, { allowFramegear }); 
 
-  const absoluteImageUrl = `${BASE_URL}/images/pets/test.png`;
+  const absoluteImageUrl = `http://37.27.33.85/images/pets/test.png`;
 
   const svg = await satori(
     <div style={{
@@ -120,8 +121,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         }]
     })
 
-  const base64Svg = Buffer.from(svg).toString('base64');
-  const dataUrl = `data:image/svg+xml;base64,${base64Svg}`;
+  const svgBuffer = Buffer.from(svg);
+  const pngBuffer = await sharp(svgBuffer).png().toBuffer();
+  const base64Png = pngBuffer.toString('base64');
+  const dataUrl = `data:image/png;base64,${base64Png}`;
 
   return new NextResponse(getFrameHtmlResponse({
     buttons: [
