@@ -41,6 +41,9 @@ export class BlockchainService implements IBlockchainService {
   }
 
   public async Mint(signaturePacket: SignaturePacket): Promise<TransactionBroadcastDescription> {
+    console.log("SIGNATURE PACKET");
+    console.log(JSON.stringify(signaturePacket));
+
     const validationResult = await this.ValidateSignaturePacket(signaturePacket);
     if (!validationResult.valid) {
       throw new BadRequestException("Invalid signature packet was provided");
