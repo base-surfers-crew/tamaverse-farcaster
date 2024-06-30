@@ -6,9 +6,8 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <meta property="fc:frame" content="vNext" />
-        <meta property="og:title" content="Farcaster: Tamagotchi" />
-        <meta property="og:description" content="Farcaster: Tamagotchi game" />
-        <meta property="fc:frame:image" content={`${BASE_URL}/images/welcome/screen.png`} />
+        <meta property="og:title" content="Tamaverse" />
+        <meta property="fc:frame:image" content={`${BASE_URL}/images/welcome/screen.png` } />
         <meta property="og:image" content={`${BASE_URL}/images/welcome/screen.png`} />
         <meta property="fc:frame:post_url" content={`${BASE_URL}/api/check`} />
         <meta property="fc:frame:button:1" content="Let’s start! 🚀" />
