@@ -17,7 +17,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const frameRequest: FrameRequest = await req.json();
   // const { isValid, message } = await getFrameMessage(frameRequest, { allowFramegear }); 
 
-  const absoluteImageUrl = `http://37.27.33.85/images/pets/test.png`;
+  const absoluteImageUrl = `https://app.tamaverse.live/images/pets/test.png`;
 
   const svg = await satori(
     <div style={{
