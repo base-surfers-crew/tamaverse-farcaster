@@ -22,38 +22,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     })
 
     const mintResponseData = await mintResponse.json();
-
-    // const txPayload = {
-    //   chainId: "eip155:84532",
-    //   method: "eth_sendTransaction",
-    //   params: {
-    //     abi: [
-    //       {
-    //           "constant": false,
-    //           "inputs": [
-    //             {
-    //               "name": "_to",
-    //               "type": "address"
-    //             },
-    //             {
-    //               "name": "_value",
-    //               "type": "uint256"
-    //             }
-    //           ],
-    //           "name": "mint",
-    //           "outputs": [],
-    //           "payable": false,
-    //           "stateMutability": "nonpayable",
-    //           "type": "function"
-    //         }
-    //     ],
-    //     to: "0x00000000fcCe7f938e7aE6D3c335bD6a1a7c593D",
-    //     data: "0x783a112b0000000000000000000000000000000000000000000000000000000000000e250000000000000000000000000000000000000000000000000000000000000001",
-    //     value: "984316556204476",
-    //   },
-    // };
   
-    return new NextResponse(JSON.stringify(mintResponseData), { status: 200 });
+    return new NextResponse(JSON.stringify(mintResponseData.data), { status: 200 });
   } catch {
     const errorMeta = await errorHandler('Error on mint NFT')
     return new NextResponse(getFrameHtmlResponse(errorMeta));
