@@ -11,10 +11,6 @@ import {
 import { classes } from '@automapper/classes';
 import { injectable } from 'inversify';
 import { IMapper } from './IMapper';
-import { User } from '../../Persistence/Entities/User';
-import { UserDescriptionResponse } from '../DTOs/Users/Responses/UserDescriptionResponse';
-import { EnergyUtil } from '../../Services/Utils/EnergyUtil';
-import { ExperienceUtil } from '../../Services/Utils/ExperienceUtil';
 
 @injectable()
 export class Mapper implements IMapper {
@@ -47,30 +43,5 @@ export class Mapper implements IMapper {
   }
 
   private InitializeMaps(): void {
-    createMap(
-      this._mapper,
-      User,
-      UserDescriptionResponse,
-      forMember(
-        x => x.CurrentEnergy,
-        mapFrom(x => x.Eneregy)
-      ),
-      forMember(
-        x => x.AccumulatedEnergyForToday,
-        mapFrom(x => x.AccumulatedEnergy)
-      ),
-      forMember(
-        x => x.MaxEnergyForToday,
-        mapFrom(x => EnergyUtil.CalcMaxEnergy(x.Level))
-      ),
-      forMember(
-        x => x.CurrentExperience,
-        mapFrom(x => x.Experience)
-      ),
-      forMember(
-        x => x.ExperienceRequiredForLevelUp,
-        mapFrom(x => ExperienceUtil.RequiredForLevelUp(x.Level))
-      ),
-    )
   }
 }

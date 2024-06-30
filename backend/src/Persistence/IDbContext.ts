@@ -3,15 +3,11 @@ import {
   SqlEntityManager as SqlEntityManagerPostgresql,
   QueryBuilder as QueryBuilderPostgres,
 } from '@mikro-orm/postgresql';
-import { User } from './Entities/User';
 import { BaseEntity } from './Entities/BaseEntity';
-import { RefreshToken } from './Entities/RefreshToken';
-import { Pet } from './Entities/Pet';
+import { User } from './Entities/User';
 
 export interface IDbContext {
-  Users: EntityRepository<User>;
-  Pets: EntityRepository<Pet>;
-  RefreshTokens: EntityRepository<RefreshToken>;
+  Users: EntityRepository<User>;  
 
   Init(): Promise<void>;
 

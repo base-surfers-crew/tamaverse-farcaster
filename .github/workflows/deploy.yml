@@ -21,8 +21,10 @@ jobs:
       TAMAVERSE_CONTRACT_ADDRESS: ${{ secrets.TAMAVERSE_CONTRACT_ADDRESS }}
       BASE_RPC_NODE: ${{ secrets.BASE_RPC_NODE }}
       FARCAST_RPC_NODE: ${{ secrets.BASE_RPC_NODE }}
+      FARCAST_HTTP_NODE: ${{ secrets.FARCAST_HTTP_NODE }}
       SIGN_ACCOUNT_PUBLIC_KEY: ${{ secrets.SIGN_ACCOUNT_PUBLIC_KEY }}
       SIGN_ACCOUNT_PRIVATE_KEY: ${{ secrets.SIGN_ACCOUNT_PRIVATE_KEY }}
+      DOMAIN: ${{ secrets.DOMAIN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -41,6 +43,7 @@ jobs:
             -e s/^TAMAVERSE_CONTRACT_ADDRESS=.*/TAMAVERSE_CONTRACT_ADDRESS=$TAMAVERSE_CONTRACT_ADDRESS/ \
             -e s/^BASE_RPC_NODE=.*/BASE_RPC_NODE=$BASE_RPC_NODE/ \
             -e s/^FARCAST_RPC_NODE=.*/FARCAST_RPC_NODE=$FARCAST_RPC_NODE/ \
+            -e s/^FARCAST_HTTP_NODE=.*/FARCAST_HTTP_NODE=$FARCAST_HTTP_NODE/ \
             -e s/^SIGN_ACCOUNT_PUBLIC_KEY=.*/SIGN_ACCOUNT_PUBLIC_KEY=$SIGN_ACCOUNT_PUBLIC_KEY/ \
             -e s/^SIGN_ACCOUNT_PRIVATE_KEY=.*/SIGN_ACCOUNT_PRIVATE_KEY=$SIGN_ACCOUNT_PRIVATE_KEY/ \
             ./backend/.env.production
@@ -51,6 +54,7 @@ jobs:
           rm -f .env
           touch .env
           echo COMPOSE_PROJECT_NAME=tamaverse >> .env
+          echo DOMAIN=$DOMAIN >> .env
           echo DB_NAME=$DB_NAME >> .env
           echo DB_USERNAME=$DB_USERNAME >> .env
           echo DB_PASSWORD=$DB_PASSWORD >> .env

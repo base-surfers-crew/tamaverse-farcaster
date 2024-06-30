@@ -4,10 +4,11 @@ services:
       context: ./frontend
     restart: unless-stopped
     labels:
-      - "custom.label=${COMPOSE_PROJECT_NAME}"
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
-      - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.rule=Host(`${DOMAIN}`) && PathPrefix(`/`)"
+      - "traefik.http.routers.frontend.tls.certresolver=le"
+      - "traefik.http.routers.frontend.tls=true"
     networks:
       - traefik
       
@@ -16,10 +17,11 @@ services:
       context: ./backend
     restart: unless-stopped
     labels:
-      - "custom.label=${COMPOSE_PROJECT_NAME}"
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
-      - "traefik.http.routers.backend.entrypoints=web"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.rule=Host(`${DOMAIN}`) && PathPrefix(`/backend`)"
+      - "traefik.http.routers.backend.tls.certresolver=le"
+      - "traefik.http.routers.backend.tls=true"
     depends_on:
       - pg_db
     networks:
@@ -40,20 +42,27 @@ services:
 
   traefik:
     image: traefik:2.7
+    restart: unless-stopped
     command:
-      - "--log.level=INFO"
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.constraints=Label(`custom.label`,`${COMPOSE_PROJECT_NAME}`)"
-      - "--providers.docker.exposedbydefault=false"
-      - "--providers.docker.network=${COMPOSE_PROJECT_NAME}_traefik"
+      - "--api.insecure=false"
+      - "--certificatesresolvers.le.acme.email=vkirbiatev@gmail.com"
+      - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.le.acme.httpchallenge=true"
+      - "--certificatesresolvers.le.acme.storage=/le/acme.json"
       - "--entrypoints.web.address=:80"
-    labels:
-      - "io.portainer.accesscontrol.teams=devs,managers"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.websecure.address=:443"
+      - "--log.level=WARN"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=${COMPOSE_PROJECT_NAME}"
+      - "--providers.docker=true"
     ports:
       - "80:80"
-      - "8080:8080"
+      - "443:443"
+      - "127.0.0.1::8080"
     volumes:
+      - "/home/traefik/le:/le"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     networks:
       - traefik

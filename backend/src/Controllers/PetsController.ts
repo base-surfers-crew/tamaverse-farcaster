@@ -1,61 +1,32 @@
-import { controller, httpPost, httpPut, requestBody } from "inversify-express-utils";
-import { Prefix } from "./Prefix";
-import { IPetsService, PetsServiceSymbol } from "../Services/Pets/IPetsService";
-import { inject } from "inversify";
-import { BaseController } from "./BaseController";
-import { AddPetRequest } from "../Infrastructure/DTOs/Pets/Requests/AddPetRequest";
-import { plainToClass } from "class-transformer";
-import { validate } from "class-validator";
-import { ValidationException } from "../Infrastructure/Exceptions/ValidationException";
-import { AddExperienceRequest } from "../Infrastructure/DTOs/Pets/Requests/AddExperienceRequest";
-import { LevelUpResponse } from "../Infrastructure/DTOs/Pets/Responses/LevelUpResponse";
+import { controller, httpPost, requestBody } from 'inversify-express-utils';
+import { inject } from 'inversify';
+import { BaseController } from './BaseController';
+import { Prefix } from './Prefix';
+import { BlockchainServiceSymbol, IBlockchainService } from '../Services/Blockchain/IBlockchainService';
+import { SignaturePacket } from '../Infrastructure/DTOs/Farcaster/SignaturePacket';
+import { plainToClass } from 'class-transformer';
+import { validate } from 'class-validator';
+import { ValidationException } from '../Infrastructure/Exceptions/ValidationException';
 
 @controller(`${Prefix}/pets`)
 export class PetsController extends BaseController {
-  private readonly _petsService: IPetsService;
+  private readonly _blockchainService: IBlockchainService;
 
-  constructor(
-    @inject(PetsServiceSymbol) private petsService: IPetsService
-  ) {
-    super()
-    this._petsService = petsService;
+  constructor(@inject(BlockchainServiceSymbol) private blockchainService: IBlockchainService) {
+    super();
+
+    this._blockchainService = blockchainService;
   }
 
-  @httpPost("")
-  public async AddPet(@requestBody() body: Object): Promise<void> {
-    await this.AuthorizeOrFail();
-
-    const request = plainToClass(AddPetRequest, body);
+  @httpPost('/mint')
+  public async MintPet(@requestBody() body: Object): Promise<void> {
+    const request = plainToClass(SignaturePacket, body);
     const errors = await validate(request);
 
     if (errors.length !== 0) {
       throw new ValidationException(errors);
     }
 
-    const userId = await this.GetUserId();
-    await this._petsService.AddPet(userId, request.TokenId);
-  }
-
-  @httpPut("/experience")
-  public async AddExperience(@requestBody() body: Object): Promise<void> {
-    await this.AuthorizeOrFail();
-
-    const request = plainToClass(AddExperienceRequest, body);
-    const errors = await validate(request);
-
-    if (errors.length !== 0) {
-      throw new ValidationException(errors);
-    }
-
-    const userId = await this.GetUserId();
-    await this._petsService.AddExperience(userId, request.Amount);
-  }
-
-  @httpPut("/level")
-  public async AddLevel(): Promise<LevelUpResponse> {
-    await this.AuthorizeOrFail();
-    const userId = await this.GetUserId();
-    
-    return await this._petsService.LevelUp(userId);
+    await this._blockchainService.Mint(request);
   }
 }
