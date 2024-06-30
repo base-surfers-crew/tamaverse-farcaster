@@ -1,5 +1,4 @@
-import { errorHandler } from "@/handlers/error-handler";
-import { rulesFrameData } from "@/lib/constant";
+import { welcomeFrameData } from "@/lib/constant";
 import {
   FrameRequest,
   getFrameHtmlResponse,
@@ -15,12 +14,7 @@ async function getResponse(req: NextRequest) {
     allowFramegear,
   });
 
-  if(!isValid){
-    const errorMeta = await errorHandler()
-    return new NextResponse(getFrameHtmlResponse(errorMeta));
-  }
-
-  return new NextResponse(getFrameHtmlResponse(rulesFrameData));
+  return new NextResponse(getFrameHtmlResponse(welcomeFrameData));
 }
 
 export function POST(req: NextRequest): Promise<Response> {

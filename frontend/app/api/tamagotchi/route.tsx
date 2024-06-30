@@ -3,7 +3,6 @@ import {
   FrameRequest,
   getFrameHtmlResponse,
 } from "@coinbase/onchainkit/core";
-import { NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 import satori from "satori";
 import { join } from 'path';
