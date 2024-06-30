@@ -21,7 +21,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       body: JSON.stringify(frameRequest.trustedData)
     })
 
-    console.log(mintResponse)
+    const mintResponseData = await mintResponse.json();
 
     // const txPayload = {
     //   chainId: "eip155:84532",
@@ -53,7 +53,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     //   },
     // };
   
-    return new NextResponse(JSON.stringify(mintResponse), { status: 200 });
+    return new NextResponse(JSON.stringify(mintResponseData), { status: 200 });
   } catch {
     const errorMeta = await errorHandler('Error on mint NFT')
     return new NextResponse(getFrameHtmlResponse(errorMeta));

@@ -8,9 +8,15 @@ export const welcomeFrameData: FrameMetadataType = {
   image: `${BASE_URL}/images/welcome/screen.png`,
 };
 
-export const rulesFrameData: FrameMetadataType = {
+export const activitiesFrameData: FrameMetadataType = {
   buttons: [{ label: "Back" }, { label: "Continue ➡️" }],
   postUrl: `${BASE_URL}/api/pets-list`,
+  image: `${BASE_URL}/images/welcome/screen.png`,
+};
+
+export const rulesFrameData: FrameMetadataType = {
+  buttons: [{ label: "Back" }],
+  postUrl: `${BASE_URL}/api/tamagotchi`,
   image: `${BASE_URL}/images/rules/screen.png`,
 };
 

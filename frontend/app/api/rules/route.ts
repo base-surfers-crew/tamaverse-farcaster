@@ -14,13 +14,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const errorMeta = await errorHandler()
     return new NextResponse(getFrameHtmlResponse(errorMeta));
   }
-  
-  const frameData = message.button === 1 ? welcomeFrameData : rulesFrameData
 
 
-  return new NextResponse(
-    getFrameHtmlResponse(frameData),
-);
+  return new NextResponse(getFrameHtmlResponse(rulesFrameData));
 }
 
 export function POST(req: NextRequest): Promise<Response> {
