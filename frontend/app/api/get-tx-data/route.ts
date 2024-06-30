@@ -13,9 +13,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
 
   try {
-    if(message.button === 1){
-      return new NextResponse(getFrameHtmlResponse(petsListFrameData))
-    }
+    if(message.button === 1) return new NextResponse(getFrameHtmlResponse(petsListFrameData))
 
     const response = await fetch(`${BASE_URL}/backend/pets/mint`, {
       method: 'POST',
@@ -26,7 +24,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     console.log(response)
 
     const txPayload = {
-      chainId: "eip155:10",
+      chainId: "eip155:84532",
       method: "eth_sendTransaction",
       params: {
         abi: [

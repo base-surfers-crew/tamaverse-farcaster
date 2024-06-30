@@ -27,11 +27,11 @@ export const selectDroidFrameData: FrameMetadataType = {
       label: "Mint! 💠", 
       action: 'tx', 
       target: `${BASE_URL}/api/get-tx-data`,
-      postUrl: `${BASE_URL}/api/tx-callback`
+      postUrl: `${BASE_URL}/api/tamagotchi`
      }],
   postUrl: `${BASE_URL}/api/tamagotchi`,
   image: {
-    src: `${BASE_URL}/images/pets/select-droid.gif`,
+    src: `${BASE_URL}/images/gifs/hello.gif`,
   },
 };
 
