@@ -7,6 +7,7 @@ import { SignaturePacket } from '../Infrastructure/DTOs/Farcaster/SignaturePacke
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
 import { ValidationException } from '../Infrastructure/Exceptions/ValidationException';
+import { TransactionBroadcastDescription } from '../Infrastructure/DTOs/Farcaster/TransactionBroadcastDescription';
 
 @controller(`${Prefix}/pets`)
 export class PetsController extends BaseController {
@@ -19,7 +20,7 @@ export class PetsController extends BaseController {
   }
 
   @httpPost('/mint')
-  public async MintPet(@requestBody() body: Object): Promise<void> {
+  public async MintPet(@requestBody() body: Object): Promise<TransactionBroadcastDescription> {
     const request = plainToClass(SignaturePacket, body);
     const errors = await validate(request);
 
@@ -27,6 +28,6 @@ export class PetsController extends BaseController {
       throw new ValidationException(errors);
     }
 
-    await this._blockchainService.Mint(request);
+    return await this._blockchainService.Mint(request);
   }
 }

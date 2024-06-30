@@ -19,6 +19,7 @@ class FrameActionBody {
   public url: string;
   public buttonIndex: number;
   public inputText: string;
+  public address: string;
 }
 
 export class ValidateMessageResult {

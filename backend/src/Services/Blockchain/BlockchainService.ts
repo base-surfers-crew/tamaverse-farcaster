@@ -2,23 +2,30 @@ import { inject, injectable } from "inversify";
 import { IBlockchainService } from "./IBlockchainService";
 import Contract from "web3-eth-contract";
 import { SignaturePacket } from "../../Infrastructure/DTOs/Farcaster/SignaturePacket";
-import axios, { Axios } from "axios";
+import axios, { Axios, AxiosError } from "axios";
 import { ValidateMessageResult } from "../../Infrastructure/DTOs/Farcaster/ValidateMessageResult";
 import { BadRequestException } from "../../Infrastructure/Exceptions/BadRequestException";
 import { DbContextSymbol, IDbContext } from "../../Persistence/IDbContext";
 import { User } from "../../Persistence/Entities/User";
 import { TransactionBroadcastDescription } from "../../Infrastructure/DTOs/Farcaster/TransactionBroadcastDescription";
+import { BinaryUtils } from "../Utils/BinaryUtils";
+import { MathUtils } from "../Utils/MathUtils";
+import { ILoggerService, LoggerServiceSymbol } from "../Logging/ILoggerService";
+import { principal } from "inversify-express-utils";
 
 @injectable()
 export class BlockchainService implements IBlockchainService {
   private readonly _httpService: Axios;
   private readonly _dbContext: IDbContext;
+  private readonly _logger: ILoggerService;
 
   constructor(
     @inject(DbContextSymbol) private dbContext: IDbContext,
+    @inject(LoggerServiceSymbol) private logger: ILoggerService,
   ) {
     this._httpService = axios.create();
     this._dbContext = dbContext;
+    this._logger = logger;
   }
 
   public async OwnerOf(contractAddress: string, tokenId: number): Promise<string | null> {
@@ -41,9 +48,6 @@ export class BlockchainService implements IBlockchainService {
   }
 
   public async Mint(signaturePacket: SignaturePacket): Promise<TransactionBroadcastDescription> {
-    console.log("SIGNATURE PACKET");
-    console.log(JSON.stringify(signaturePacket));
-
     const validationResult = await this.ValidateSignaturePacket(signaturePacket);
     if (!validationResult.valid) {
       throw new BadRequestException("Invalid signature packet was provided");
@@ -52,13 +56,15 @@ export class BlockchainService implements IBlockchainService {
     // Add user if not exists
     let user = await this._dbContext.Users.findOne({ FarcasterId: validationResult.message.data.fid });
     if (user == null) {
-      user = new User(validationResult.message.data.fid, validationResult.message.signer);
+      user = new User(validationResult.message.data.fid, validationResult.message.data.frameActionBody.address);
       await this._dbContext.Users.persistAndFlush(user);
+    } else {
+      throw new BadRequestException("NFT was already minted for this account");
     }
 
     const minRandom = 10;
     const maxRandom = 99;
-    const rarity = Math.floor(Math.random() * (minRandom - maxRandom + 1) + minRandom);
+    const rarity = MathUtils.GetRandomInt(minRandom, maxRandom);
 
     return {
       // Base Sepolia	
@@ -74,18 +80,19 @@ export class BlockchainService implements IBlockchainService {
   }
 
   private async ValidateSignaturePacket(signaturePacket: SignaturePacket): Promise<ValidateMessageResult> {
-    try { 
-      const { data } = await axios.request<ValidateMessageResult>({
+    try {
+      const { data } = await this._httpService.request<ValidateMessageResult>({
         method: "POST",
         url: `${process.env.FARCAST_HTTP_NODE}/v1/validateMessage`,
-        data: Buffer.from(signaturePacket.trustedData.messageBytes),
+        data: BinaryUtils.HexStringToUint8Array(signaturePacket.messageBytes),
         headers: { "Content-Type": "application/octet-stream" }
       })
       
       return data;
     } catch(e) {
-      console.log(e)
-
+      if (e instanceof AxiosError) {
+        this._logger.Warn("Got an error, while validating mint message. Data: " + JSON.stringify(e.response.data));
+      }
       const res = new ValidateMessageResult()
       res.valid = false;
 
