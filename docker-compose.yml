@@ -55,7 +55,7 @@ services:
       - "--entrypoints.websecure.address=:443"
       - "--log.level=WARN"
       - "--providers.docker.exposedbydefault=false"
-      - "--providers.docker.network=${COMPOSE_PROJECT_NAME}"
+      - "--providers.docker.network=${COMPOSE_PROJECT_NAME}_traefik"
       - "--providers.docker=true"
     ports:
       - "80:80"
