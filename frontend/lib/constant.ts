@@ -1,6 +1,6 @@
 import { FrameMetadataType } from "@coinbase/onchainkit/core";
 
-export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://37.27.33.85/';
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://37.27.33.85';
 
 export const welcomeFrameData: FrameMetadataType = {
   buttons: [{ label: "Let’s start! 🚀" }],
