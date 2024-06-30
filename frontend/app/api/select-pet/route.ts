@@ -1,15 +1,18 @@
-import { selectDroidFrameData, walletConnectedFrameData } from '@/lib/constant';
+import { errorHandler } from '@/handlers/error-handler';
+import { selectDroidFrameData, welcomeFrameData } from '@/lib/constant';
 import { FrameRequest, getFrameHtmlResponse, getFrameMessage } from '@coinbase/onchainkit/core';
 import { NextRequest, NextResponse } from 'next/server';
 
-async function getResponse(req: NextRequest): Promise<NextResponse> {
-  // const allowFramegear = process.env.NODE_ENV !== 'production'; 
+async function getResponse(req: NextRequest): Promise<NextResponse> { 
   const frameRequest: FrameRequest = await req.json();
-  // const { isValid, message } = await getFrameMessage(frameRequest, { allowFramegear }); 
+  const { isValid, message } = await getFrameMessage(frameRequest); 
 
-  const buttonIndex = frameRequest.untrustedData.buttonIndex
+  if(!isValid){
+    const errorMeta = await errorHandler()
+    return new NextResponse(getFrameHtmlResponse(errorMeta));
+  }
 
-  const frameData = buttonIndex === 1 ? walletConnectedFrameData : selectDroidFrameData
+  const frameData = message.button === 1 ? welcomeFrameData : selectDroidFrameData
 
   return new NextResponse(getFrameHtmlResponse(frameData));
 }

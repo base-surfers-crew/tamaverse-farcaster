@@ -1,5 +1,5 @@
 import { errorHandler } from "@/handlers/error-handler";
-import { rulesFrameData } from "@/lib/constant";
+import { petsListFrameData } from "@/lib/constant";
 import {
   FrameRequest,
   getFrameHtmlResponse,
@@ -9,19 +9,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 async function getResponse(req: NextRequest) {
   const frameRequest: FrameRequest = await req.json();
-
-  // const allowFramegear = process.env.NODE_ENV !== 'production'; 
   const {isValid, message} = await getFrameMessage(frameRequest);
-
-
-  // console.log(message)
 
   if(!isValid){
     const errorMeta = await errorHandler()
     return new NextResponse(getFrameHtmlResponse(errorMeta));
   }
 
-  return new NextResponse(getFrameHtmlResponse(rulesFrameData));
+  return new NextResponse(getFrameHtmlResponse(petsListFrameData));
 }
 
 export function POST(req: NextRequest): Promise<Response> {
