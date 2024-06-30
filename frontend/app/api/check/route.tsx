@@ -10,7 +10,13 @@ import { NextRequest, NextResponse } from "next/server";
 async function getResponse(req: NextRequest) {
   const frameRequest: FrameRequest = await req.json();
 
-  // const {isValid, message} = await getFrameMessage(frameRequest);
+  // const allowFramegear = process.env.NODE_ENV !== 'production'; 
+  // const {isValid, message} = await getFrameMessage(frameRequest, {
+  //   allowFramegear
+  // });
+
+
+  // console.log(message)
 
   // if(!isValid){
   //   const errorMeta = await errorHandler()
