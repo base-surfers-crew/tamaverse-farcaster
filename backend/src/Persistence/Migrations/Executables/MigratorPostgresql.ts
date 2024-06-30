@@ -43,11 +43,11 @@ export async function Migrate(arg?: MigratorCommands): Promise<void> {
 
   switch (command) {
     case MigratorCommands.Generate:
-      await migrator.createMigration('./src/Persistence/Migrations');
+      await migrator.createMigration('./src/Persistence/Migrations/Postgresql');
       break;
 
     case MigratorCommands.Create:
-      await migrator.createMigration('./src/Persistence/Migrations', true);
+      await migrator.createMigration('./src/Persistence/Migrations/Postgresql', true);
       break;
 
     case MigratorCommands.Up:

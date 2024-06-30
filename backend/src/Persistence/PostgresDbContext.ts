@@ -6,21 +6,16 @@ import {
 } from '@mikro-orm/postgresql';
 import { injectable } from 'inversify';
 import { ILoggerService } from '../Services/Logging/ILoggerService';
-import { User } from './Entities/User';
 import { IDbContext } from './IDbContext';
 import { Entities } from './Entities';
 import { BaseEntity } from './Entities/BaseEntity';
-import { RefreshToken } from './Entities/RefreshToken';
-import { Pet } from './Entities/Pet';
+import { User } from './Entities/User';
 
 @injectable()
 export class PostgresDbContext implements IDbContext {
+  public Users: EntityRepository<User>
+
   private static _db: MikroORM;
-
-  public Users: EntityRepository<User>;
-  public Pets: EntityRepository<Pet>;
-  public RefreshTokens: EntityRepository<RefreshToken>
-
   private readonly _logger: ILoggerService;
 
   constructor() {
@@ -66,7 +61,5 @@ export class PostgresDbContext implements IDbContext {
     const forkedEntityManager = PostgresDbContext._db.em.fork();
 
     this.Users = forkedEntityManager.getRepository(User);
-    this.Pets = forkedEntityManager.getRepository(Pet);
-    this.RefreshTokens = forkedEntityManager.getRepository(RefreshToken);
   }
 }

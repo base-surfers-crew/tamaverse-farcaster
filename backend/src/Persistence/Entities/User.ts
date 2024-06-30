@@ -1,15 +1,6 @@
-import {
-  Cascade,
-  Collection,
-  Entity,
-  OneToMany,
-  OneToOne,
-  Property,
-} from '@mikro-orm/core';
-import { AutoMap } from '@automapper/classes';
-import { BaseEntity } from './BaseEntity';
-import { RefreshToken } from './RefreshToken';
-import { Pet } from './Pet';
+import { Entity, Property } from "@mikro-orm/core";
+import { BaseEntity } from "./BaseEntity";
+import { AutoMap } from "@automapper/classes";
 
 @Entity()
 export class User extends BaseEntity {
@@ -37,13 +28,9 @@ export class User extends BaseEntity {
   @AutoMap()
   public Level: number;
 
-  @OneToOne(() => Pet, (x) => x.User, { nullable: true, cascade: [Cascade.REMOVE] })
+  @Property({ nullable: true })
   @AutoMap()
-  public Pet?: Pet;
-
-  @OneToMany(() => RefreshToken, (rt) => rt.User, { cascade: [Cascade.REMOVE] })
-  @AutoMap()
-  public RefreshTokens = new Collection<RefreshToken>(this);
+  public PetId?: number;
   
   constructor(
     fid: number,
