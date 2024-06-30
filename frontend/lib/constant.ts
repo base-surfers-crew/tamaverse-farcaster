@@ -10,24 +10,8 @@ export const welcomeFrameData: FrameMetadataType = {
 
 export const rulesFrameData: FrameMetadataType = {
   buttons: [{ label: "Back" }, { label: "Continue ➡️" }],
-  postUrl: `${BASE_URL}/api/why-connect-wallet`,
-  image: `${BASE_URL}/images/rules/screen.png`,
-};
-
-export const whyConnectWalletFrameData: FrameMetadataType = {
-  buttons: [
-    { label: "Back" },
-    { label: "Connect MetaMask" },
-    { label: "Connect CoinBase Wallet" },
-  ],
-  postUrl: `${BASE_URL}/api/connect-wallet`,
-  image: `${BASE_URL}/images/connect-wallet/screen.png`,
-};
-
-export const walletConnectedFrameData: FrameMetadataType = {
-  buttons: [{ label: "Back" }, { label: "Continue ➡️" }],
   postUrl: `${BASE_URL}/api/pets-list`,
-  image: `${BASE_URL}/images/connect-wallet/wallet-connected.png`,
+  image: `${BASE_URL}/images/rules/screen.png`,
 };
 
 export const petsListFrameData: FrameMetadataType = {

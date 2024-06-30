@@ -1,5 +1,5 @@
 import { errorHandler } from "@/handlers/error-handler";
-import { petsListFrameData } from "@/lib/constant";
+import { rulesFrameData } from "@/lib/constant";
 import {
   FrameRequest,
   getFrameHtmlResponse,
@@ -16,7 +16,7 @@ async function getResponse(req: NextRequest) {
     return new NextResponse(getFrameHtmlResponse(errorMeta));
   }
 
-  return new NextResponse(getFrameHtmlResponse(petsListFrameData));
+  return new NextResponse(getFrameHtmlResponse(rulesFrameData));
 }
 
 export function POST(req: NextRequest): Promise<Response> {

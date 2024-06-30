@@ -1,5 +1,4 @@
 
-import { welcomeImageBase64 } from '@/lib/base-64-images.constant'
 import { BASE_URL } from '@/lib/constant'
 import { Html, Head, Main, NextScript } from 'next/document'
 
