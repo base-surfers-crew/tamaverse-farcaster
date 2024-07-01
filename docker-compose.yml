@@ -40,37 +40,12 @@ services:
     networks:
       - pg_net
 
-  traefik:
-    image: traefik:2.7
-    restart: unless-stopped
-    command:
-      - "--api.insecure=false"
-      - "--certificatesresolvers.le.acme.email=vkirbiatev@gmail.com"
-      - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.le.acme.httpchallenge=true"
-      - "--certificatesresolvers.le.acme.storage=/le/acme.json"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
-      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
-      - "--entrypoints.websecure.address=:443"
-      - "--log.level=WARN"
-      - "--providers.docker.exposedbydefault=false"
-      - "--providers.docker.network=${COMPOSE_PROJECT_NAME}_traefik"
-      - "--providers.docker=true"
-    ports:
-      - "80:80"
-      - "443:443"
-      - "127.0.0.1::8080"
-    volumes:
-      - "/home/traefik/le:/le"
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    networks:
-      - traefik
-
 volumes:
   pgdata:
 
 networks:
   pg_net:
   traefik:
+    name: traefik
+    external: true
 

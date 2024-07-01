@@ -58,7 +58,9 @@ export class BlockchainService implements IBlockchainService {
     if (user == null) {
       user = new User(validationResult.message.data.fid, validationResult.message.data.frameActionBody.address);
       await this._dbContext.Users.persistAndFlush(user);
-    } else {
+    }
+
+    if (user.PetId != null) {
       throw new BadRequestException("NFT was already minted for this account");
     }
 
