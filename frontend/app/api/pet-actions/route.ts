@@ -1,12 +1,6 @@
 import { errorHandler } from "@/handlers/error-handler";
+import { BASE_URL } from "@/lib/constant";
 import {
-  BASE_URL,
-  activitiesFrameData,
-  rulesFrameData,
-  selectDroidFrameData,
-} from "@/lib/constant";
-import {
-  FrameMetadataType,
   FrameRequest,
   getFrameHtmlResponse,
   getFrameMessage,
@@ -35,7 +29,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     case 3:
       frameImage = `${BASE_URL}/images/gifs/learn.gif`;
     default:
-      frameImage = `${BASE_URL}/images/rules/screen.png`; 
+      frameImage = `${BASE_URL}/images/rules/screen.png`;
       break;
   }
 

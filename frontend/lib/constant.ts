@@ -20,16 +20,16 @@ export const petsListFrameData: FrameMetadataType = {
   image: `${BASE_URL}/images/pets/list.png`,
 };
 
-export const selectDroidFrameData: FrameMetadataType = {
+export const mintPetFrameData: FrameMetadataType = {
   buttons: [
     { label: "Back"}, 
     { 
       label: "Mint! 💠", 
-      action: 'tx', 
-      target: `${BASE_URL}/api/get-tx-data`,
-      postUrl: `${BASE_URL}/api/pet`
+      // action: 'tx', 
+      // target: `${BASE_URL}/api/get-tx-data`,
+      // postUrl: `${BASE_URL}/api/pet`
      }],
-  postUrl: `${BASE_URL}/api/select-pet`,
+  postUrl: `${BASE_URL}/api/pet`,
   image: {
     src: `${BASE_URL}/images/gifs/hello.gif`,
   },

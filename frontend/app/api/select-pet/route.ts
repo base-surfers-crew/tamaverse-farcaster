@@ -1,5 +1,5 @@
 import { errorHandler } from '@/handlers/error-handler';
-import { activitiesFrameData, rulesFrameData, selectDroidFrameData } from '@/lib/constant';
+import { activitiesFrameData, mintPetFrameData } from '@/lib/constant';
 import { FrameRequest, getFrameHtmlResponse, getFrameMessage } from '@coinbase/onchainkit/core';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -12,7 +12,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return new NextResponse(getFrameHtmlResponse(errorMeta));
   }
 
-  const frameData = message.button === 1 ? activitiesFrameData : selectDroidFrameData
+  const frameData = message.button === 1 ? activitiesFrameData : mintPetFrameData
 
   return new NextResponse(getFrameHtmlResponse(frameData));
 }
