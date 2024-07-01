@@ -28,6 +28,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       break;
     case 3:
       frameImage = `${BASE_URL}/images/gifs/learn.gif`;
+      break;
     default:
       frameImage = `${BASE_URL}/images/rules/screen.png`;
       break;

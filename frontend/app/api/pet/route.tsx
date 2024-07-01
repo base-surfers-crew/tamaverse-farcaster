@@ -134,7 +134,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   return new NextResponse(getFrameHtmlResponse({
     buttons: [
-      { label: "Mine 🥣" },
+      { label: "Mine ⛏️" },
       { label: "Train 💪" },
       { label: "Educate 🧠" },
       { label: "Rules" },
