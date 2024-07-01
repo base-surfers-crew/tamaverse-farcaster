@@ -5,10 +5,10 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.entrypoints=websecure"
-      - "traefik.http.routers.frontend.rule=Host(`${DOMAIN}`) && PathPrefix(`/`)"
-      - "traefik.http.routers.frontend.tls.certresolver=le"
-      - "traefik.http.routers.frontend.tls=true"
+      - "traefik.http.routers.frontend-${COMPOSE_PROJECT_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.frontend-${COMPOSE_PROJECT_NAME}.rule=Host(`${DOMAIN}`) && PathPrefix(`/`)"
+      - "traefik.http.routers.frontend-${COMPOSE_PROJECT_NAME}.tls.certresolver=le"
+      - "traefik.http.routers.frontend-${COMPOSE_PROJECT_NAME}.tls=true"
     networks:
       - traefik
       
@@ -18,10 +18,10 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.entrypoints=websecure"
-      - "traefik.http.routers.backend.rule=Host(`${DOMAIN}`) && PathPrefix(`/backend`)"
-      - "traefik.http.routers.backend.tls.certresolver=le"
-      - "traefik.http.routers.backend.tls=true"
+      - "traefik.http.routers.backend-${COMPOSE_PROJECT_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.backend-${COMPOSE_PROJECT_NAME}.rule=Host(`${DOMAIN}`) && PathPrefix(`/backend`)"
+      - "traefik.http.routers.backend-${COMPOSE_PROJECT_NAME}.tls.certresolver=le"
+      - "traefik.http.routers.backend-${COMPOSE_PROJECT_NAME}.tls=true"
     depends_on:
       - pg_db
     networks:
