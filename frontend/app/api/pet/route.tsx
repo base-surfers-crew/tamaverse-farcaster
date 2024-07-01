@@ -24,7 +24,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
 
   const absoluteImageUrl = `${BASE_URL}/images/pets/droid.png`;
-  const userFid = message?.interactor?.fid || '';
+  const userFid = message?.interactor?.fid ? message.interactor.fid.toString() : '';
 
   const svg = await satori(
     <div style={{
