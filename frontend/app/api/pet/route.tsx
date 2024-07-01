@@ -78,7 +78,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       }}>
         <div style={{
             marginBottom: 8
-        }}>Droid {message.interactor.fid ?? ''}</div>
+        }}>Droid {message?.interactor?.fid ?? ''}</div>
         <img style={{
           display: 'block',
           width: '50%',
