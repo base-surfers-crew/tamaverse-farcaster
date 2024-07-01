@@ -2,20 +2,26 @@ import { BASE_URL } from "@/lib/constant";
 import {
   FrameRequest,
   getFrameHtmlResponse,
+  getFrameMessage,
 } from "@coinbase/onchainkit/core";
 import { NextRequest, NextResponse } from "next/server";
 import satori from "satori";
 import { join } from 'path';
 import * as fs from "fs";
 import sharp from 'sharp';
+import { errorHandler } from "@/handlers/error-handler";
 
 const fontPath = join(process.cwd(), 'Roboto-Regular.ttf')
 const fontData = fs.readFileSync(fontPath)
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-  // const allowFramegear = process.env.NODE_ENV !== 'production'; 
   const frameRequest: FrameRequest = await req.json();
-  // const { isValid, message } = await getFrameMessage(frameRequest, { allowFramegear }); 
+  const { isValid, message } = await getFrameMessage(frameRequest); 
+
+  if(!isValid){
+    const errorMeta = await errorHandler('Error on get data about pet')
+    return new NextResponse(getFrameHtmlResponse(errorMeta));
+  }
 
   const absoluteImageUrl = `https://app.tamaverse.live/images/pets/test.png`;
 
@@ -128,15 +134,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   return new NextResponse(getFrameHtmlResponse({
     buttons: [
-      { label: "Feed 🥣" },
+      { label: "Mine 🥣" },
       { label: "Train 💪" },
       { label: "Educate 🧠" },
       { label: "Rules" },
     ],
-    postUrl: `${BASE_URL}/api/tamagotchi`,
-    image: {
-      src: dataUrl,
-    },
+    postUrl: `${BASE_URL}/api/pet-actions`,
+    image: { src: dataUrl },
   }));
 }
 

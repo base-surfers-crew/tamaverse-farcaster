@@ -27,7 +27,7 @@ export const selectDroidFrameData: FrameMetadataType = {
       label: "Mint! 💠", 
       action: 'tx', 
       target: `${BASE_URL}/api/get-tx-data`,
-      postUrl: `${BASE_URL}/api/tamagotchi`
+      postUrl: `${BASE_URL}/api/pet`
      }],
   postUrl: `${BASE_URL}/api/select-pet`,
   image: {
@@ -37,7 +37,7 @@ export const selectDroidFrameData: FrameMetadataType = {
 
 export const createPetFrameData: FrameMetadataType = {
   buttons: [{ label: "Continue" }],
-  postUrl: `${BASE_URL}/api/tamagotchi`,
+  postUrl: `${BASE_URL}/api/pet`,
   image: {
     src: `${BASE_URL}/images/pets/new-droid.png`,
   },
@@ -45,6 +45,6 @@ export const createPetFrameData: FrameMetadataType = {
 
 export const rulesFrameData: FrameMetadataType = {
   buttons: [{ label: "Back" }],
-  postUrl: `${BASE_URL}/api/tamagotchi`,
+  postUrl: `${BASE_URL}/api/pet`,
   image: `${BASE_URL}/images/rules/screen.png`,
 };
