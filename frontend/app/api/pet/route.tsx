@@ -24,7 +24,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
 
   const absoluteImageUrl = `${BASE_URL}/images/pets/droid.png`;
-  const userFid = message?.interactor?.fid ? message.interactor.fid.toString() : '';
+  const userFid = message?.interactor?.fid ? `Droid ${message.interactor.fid}` : 'Droid';
 
   const svg = await satori(
     <div style={{
@@ -79,7 +79,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       }}>
         <div style={{
             marginBottom: 8
-        }}>Droid {userFid}</div>
+        }}>{userFid}</div>
         <img style={{
           display: 'block',
           width: '50%',
