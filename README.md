@@ -8,6 +8,7 @@ Welcome to Tamaverse, a Web3 application where users nurture and level up NFT pe
 
 ## Table of Contents
 - [Introduction](#introduction)
+- [Links](#links)
 - [Features](#features)
 - [Monorepo Structure](#monorepo-structure)
 - [Roadmap](#roadmap)
@@ -15,6 +16,12 @@ Welcome to Tamaverse, a Web3 application where users nurture and level up NFT pe
 
 ## Introduction
 Tamaverse addresses the challenge of increasing user engagement and activity on the Farcaster platform. By integrating a gamified experience with NFT pets, Tamaverse creates a fun and interactive way for users to stay active on Farcaster. Users perform activities to earn energy, which they then use to develop their pets.
+
+## Links
+
+- [Warpcast](https://warpcast.com/tamaverse)  
+- [Frame](https://app.tamaverse.live/)
+- [Smart-contract](https://sepolia.basescan.org/address/0x1a55FF1c4e439fbD78173B1c6B0f062c7642f054#writeContract)
 
 ## Features
 - **NFT Pets:** Collect and nurture unique NFT pets.
