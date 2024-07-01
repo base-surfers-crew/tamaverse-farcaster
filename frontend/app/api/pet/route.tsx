@@ -23,7 +23,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return new NextResponse(getFrameHtmlResponse(errorMeta));
   }
 
-  const absoluteImageUrl = `https://app.tamaverse.live/images/pets/test.png`;
+  const absoluteImageUrl = `${BASE_URL}/images/pets/droid.png`;
 
   const svg = await satori(
     <div style={{
@@ -78,7 +78,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       }}>
         <div style={{
             marginBottom: 8
-        }}>Droid {message?.interactor?.fid ?? ''}</div>
+        }}>Droid</div>
         <img style={{
           display: 'block',
           width: '50%',
