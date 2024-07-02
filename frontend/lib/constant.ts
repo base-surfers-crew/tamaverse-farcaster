@@ -25,9 +25,9 @@ export const mintPetFrameData: FrameMetadataType = {
     { label: "Back"}, 
     { 
       label: "Mint! 💠", 
-      // action: 'tx', 
-      // target: `${BASE_URL}/api/get-tx-data`,
-      // postUrl: `${BASE_URL}/api/pet`
+      action: 'tx', 
+      target: `${BASE_URL}/api/get-tx-data`,
+      postUrl: `${BASE_URL}/api/pet`
      }],
   postUrl: `${BASE_URL}/api/pet`,
   image: {
