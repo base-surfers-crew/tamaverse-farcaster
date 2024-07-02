@@ -24,7 +24,7 @@ export const mintPetFrameData: FrameMetadataType = {
   buttons: [
     { label: "Back"}, 
     { 
-      label: "Mint 💠", 
+      label: "Mint! 💠", 
       action: 'tx', 
       target: `${BASE_URL}/api/get-tx-data`,
       postUrl: `${BASE_URL}/api/pet`
