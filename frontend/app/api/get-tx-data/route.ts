@@ -22,6 +22,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     })
 
     const mintResponseData = await mintResponse.json();
+    console.log('mintResponse', mintResponse)
+    console.log('to send', JSON.stringify(mintResponseData))
   
     return new NextResponse(JSON.stringify(mintResponseData), { status: 200 });
   } catch {
