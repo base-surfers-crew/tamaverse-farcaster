@@ -23,7 +23,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
     const mintResponseData = await mintResponse.json();
     console.log( new NextResponse(JSON.stringify(mintResponseData), { status: 200 }))
-    return new NextResponse(JSON.stringify(mintResponseData), { status: 200 });
+    return new NextResponse(
+      JSON.stringify(mintResponseData), 
+      { status: 200, headers: { 'Content-Type': 'application/json' }  });
   } catch {
     const errorMeta = await errorHandler('Error on mint NFT')
     return new NextResponse(getFrameHtmlResponse(errorMeta));
