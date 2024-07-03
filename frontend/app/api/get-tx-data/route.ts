@@ -53,7 +53,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       },
     };
     return new NextResponse(
-      JSON.stringify(txPayload), 
+      JSON.stringify(mintResponseData), 
       { status: 200, headers: { 'Content-Type': 'application/json' }  });
   } catch {
     const errorMeta = await errorHandler('Error on mint NFT')
